@@ -89,6 +89,7 @@ int push_event_to_app_queue(wifi_app_t *app, wifi_event_t *event)
     clone_wifi_event(event, &clone);
     if(clone == NULL) {
         wifi_util_error_print(WIFI_APPS, "%s %d failed to clone event\n",__FUNCTION__, __LINE__);
+        wifi_util_error_print(WIFI_APPS, "%s %d Testing\n",__FUNCTION__, __LINE__);
         return RETURN_ERR;
     }
 
