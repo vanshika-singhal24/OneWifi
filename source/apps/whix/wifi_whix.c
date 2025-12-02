@@ -955,7 +955,7 @@ int radio_channel_util_response(wifi_app_t *app, wifi_provider_response_t *provi
     radio_chan_data_t *channel_stats = NULL;
 
     radio_index = provider_response->args.radio_index;
-    if (radio_index > MAX_NUM_RADIOS) {
+    if (radio_index >= MAX_NUM_RADIOS) {
         wifi_util_error_print(WIFI_APPS, "%s:%d Invalid radio index %d\n", __func__, __LINE__,
             radio_index);
         return RETURN_ERR;
