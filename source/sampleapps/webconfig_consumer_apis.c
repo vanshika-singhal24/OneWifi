@@ -676,6 +676,7 @@ int parse_subdoc_input_param(webconfig_consumer_t *consumer, webconfig_subdoc_da
 
 void test_radio_subdoc_change(webconfig_consumer_t *consumer)
 {
+    printf("%s:%d: Entry\n", __func__, __LINE__);
     webconfig_subdoc_data_t *data = NULL;
     char *str;
     webconfig_error_t ret=webconfig_error_none;
@@ -732,6 +733,7 @@ void test_radio_subdoc_change(webconfig_consumer_t *consumer)
     
     free(data);
     data = NULL;
+    printf("%s:%d: Exit\n", __func__, __LINE__);
 }
 
 void test_null_subdoc_change(webconfig_consumer_t *consumer)
@@ -2053,6 +2055,7 @@ int decode_802_11_frame(webconfig_consumer_t *consumer, unsigned int vap_index, 
 
 int decode_pcap(webconfig_consumer_t *consumer, unsigned int vap_index, char *file_name)
 {
+    printf("%s:%d: Entry\n", __func__, __LINE__);
     // mac_address_t sta;
     FILE *fp = NULL;
     unsigned char buff[MAX_FRAME_SZ];
@@ -2211,6 +2214,7 @@ int decode_pcap(webconfig_consumer_t *consumer, unsigned int vap_index, char *fi
     fclose(fp);
 
     printf("%s:%d: Frames Parsed: %d\n", __func__, __LINE__, frames_parsed);
+    printf("%s:%d: Exit\n", __func__, __LINE__);
     return 0;
 }
 

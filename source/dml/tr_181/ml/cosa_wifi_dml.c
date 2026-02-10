@@ -12824,7 +12824,7 @@ InterworkingElement_GetParamBoolValue
         BOOL*                       pBool
     )
 {   
- 
+    wifi_util_error_print(WIFI_CTRL,"Entry %s:%d \n",__func__, __LINE__);
     wifi_vap_info_t *vap_pcfg = (wifi_vap_info_t *)hInsContext;
     if (vap_pcfg == NULL)
     {
@@ -12893,6 +12893,7 @@ InterworkingElement_GetParamBoolValue
         return TRUE;
     }
 
+    wifi_util_error_print(WIFI_CTRL,"Exit %s:%d \n",__func__, __LINE__);
     /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
     return FALSE;
 }

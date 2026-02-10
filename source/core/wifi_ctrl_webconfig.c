@@ -1925,6 +1925,7 @@ static int remove_all_mac_acl_entries_from_cache_and_db(rdk_wifi_vap_info_t *cur
 
 int webconfig_hal_mac_filter_apply(wifi_ctrl_t *ctrl, webconfig_subdoc_decoded_data_t *data, webconfig_subdoc_type_t subdoc_type)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     unsigned int radio_index, vap_index;
     rdk_wifi_vap_info_t *new_config = NULL, *current_config = NULL;
     wifi_mgr_t *mgr = get_wifimgr_obj();
@@ -2029,6 +2030,7 @@ int webconfig_hal_mac_filter_apply(wifi_ctrl_t *ctrl, webconfig_subdoc_decoded_d
                         wifidb_update_wifi_macfilter_config(macfilterkey, temp_acl_entry, true);
                     } else {
                         if (strncmp(check_acl_entry->device_name, new_acl_entry->device_name, sizeof(check_acl_entry->device_name)-1) != 0) {
+                           wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry in if condition...\n", __func__, __LINE__);
                             snprintf(check_acl_entry->device_name, sizeof(check_acl_entry->device_name), "%s", new_acl_entry->device_name);
                             snprintf(macfilterkey, sizeof(macfilterkey), "%s-%s", current_config->vap_name, new_mac_str);
 
@@ -2053,6 +2055,7 @@ int webconfig_hal_mac_filter_apply(wifi_ctrl_t *ctrl, webconfig_subdoc_decoded_d
         }
         hash_map_destroy(new_config->acl_map);
     }
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return ret;
 }
 

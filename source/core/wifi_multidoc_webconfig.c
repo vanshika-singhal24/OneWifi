@@ -1588,6 +1588,7 @@ bool webconf_ver_txn(const char* bb, uint32_t *ver, uint16_t *txn)
 
 pErr wifi_vap_cfg_subdoc_handler(void *data)
 {
+    wifi_util_info_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     pErr execRetVal = NULL;
     unsigned long msg_size = 0L;
     unsigned char *msg = NULL;
@@ -1691,6 +1692,7 @@ finished:
     free(blob_buf);
     msgpack_zone_destroy(&msg_z);
     free(msg);
+    wifi_util_info_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return execRetVal;
 }
 

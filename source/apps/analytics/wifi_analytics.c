@@ -195,6 +195,7 @@ int analytics_event_webconfig_get_data_for_dmlthread(wifi_app_t *apps, void *arg
 
 int analytics_event_webconfig_set_data(wifi_app_t *apps, void *arg, wifi_event_subtype_t sub_type)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     webconfig_subdoc_data_t *doc = (webconfig_subdoc_data_t *)arg;
     char temp_str[512];
     webconfig_subdoc_decoded_data_t *decoded_params = NULL;
@@ -299,6 +300,7 @@ int analytics_event_webconfig_set_data(wifi_app_t *apps, void *arg, wifi_event_s
         wifi_util_info_print(WIFI_ANALYTICS, analytics_format_core_hal, "apply", temp_str);
     }
 
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return RETURN_OK;
 }
 

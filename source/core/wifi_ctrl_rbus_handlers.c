@@ -3218,6 +3218,7 @@ bus_error_t get_client_assoc_request_multi(char const* methodName, raw_data_t *i
 
 bus_error_t send_action_frame(char *name, raw_data_t *p_data, bus_user_data_t *user_data)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     (void)user_data;
     unsigned int len = 0;
     char *pTmp = NULL;
@@ -3248,6 +3249,7 @@ bus_error_t send_action_frame(char *name, raw_data_t *p_data, bus_user_data_t *u
     push_event_to_ctrl_queue((char *)pTmp, len, wifi_event_type_command,
         wifi_event_type_send_action_frame, NULL);
 
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return bus_error_success;
 }
 

@@ -1738,6 +1738,7 @@ wifi_channelBandwidth_t sync_bandwidth_and_hw_variant(uint32_t variant, wifi_cha
 
 bool wifi_factory_reset(bool factory_reset_all_vaps)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     wifi_vap_info_t *default_vap = NULL;
     wifi_vap_info_t *p_vapInfo = NULL;
     rdk_wifi_vap_info_t rdk_default_vap;
@@ -1917,7 +1918,7 @@ bool wifi_factory_reset(bool factory_reset_all_vaps)
         wifi_util_info_print(WIFI_DMCLI,"%s:%d ApplyAccessPointSettings falied \n",__func__, __LINE__);
         goto cleanup;
     }
-    wifi_util_info_print(WIFI_DMCLI,"Exit %s:%d \n",__func__, __LINE__);
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     retval = TRUE;
 
 cleanup:

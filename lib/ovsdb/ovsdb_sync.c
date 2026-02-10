@@ -182,6 +182,7 @@ static pthread_mutex_t ovsdb_lock;
 
 json_t *ovsdb_write_s(char *ovsdb_sock_path, json_t *jsdata)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     int     ovs_fd = -1;
     json_t *retval = NULL;
 
@@ -278,6 +279,7 @@ json_t *ovsdb_write_s(char *ovsdb_sock_path, json_t *jsdata)
         wifidb_print("Sync: Error parsing OVSDB response (%s):\n%s\r\n", err.text, ovsdb_write_buf);
     }
 
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
 error:
     pthread_mutex_unlock(&ovsdb_lock);
     return retval;

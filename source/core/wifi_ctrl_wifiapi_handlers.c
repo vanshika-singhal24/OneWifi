@@ -673,6 +673,7 @@ static void wifiapi_handle_get_ApAssocDeviceDiagnosticResult(char **args, unsign
 
 void process_wifiapi_command(char *command, unsigned int len)
 {
+    wifi_util_info_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     char input[1024];
     unsigned int num_args = 0, i, found = 0, ret;
     unsigned int radio_index = 0, vap_index, vap_array_index = 0;
@@ -1000,6 +1001,7 @@ void process_wifiapi_command(char *command, unsigned int len)
             if (idx >= sizeof(buff)) goto publish;
         }
     }
+    wifi_util_info_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
 
 publish:
     ctrl->wifiapi.result = buff;

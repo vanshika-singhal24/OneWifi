@@ -186,6 +186,7 @@ bool is_blaster_device_associated(int ap_index, mac_address_t sta_mac)
 
 static bool DeviceCpuUtil_DataGet(unsigned int *util_cpu)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     FILE *fp;
     char buff[256] = {};
     char token[] = "cpu ";
@@ -240,6 +241,7 @@ static bool DeviceCpuUtil_DataGet(unsigned int *util_cpu)
     }
 
     fclose(fp);
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return true;
 }
 

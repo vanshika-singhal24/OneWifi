@@ -39,6 +39,7 @@
 #include "os.h"
 #include "os_socket.h"
 #include "util.h"
+#include "wifi_util.h"
 
 #define OVSH_SOCK_PATH 108
 #define OVSH_COL_NUM    256
@@ -1184,6 +1185,7 @@ static bool ovsh_parse_parent(json_t *parent_where,  // json array
  */
 static bool ovsh_parse_where(json_t *where, char *_str, bool is_parent_where)
 {
+    wifi_util_error_print(WIFI_CTRL,"%s:%d Entry\n", __func__, __LINE__);
     bool retval = false;
     char str[OVSH_COL_STR];
 
@@ -1271,6 +1273,7 @@ static bool ovsh_parse_where(json_t *where, char *_str, bool is_parent_where)
         ovsh_where_expr[ovsh_where_num-1] = strdup(_str);
     }
 
+    wifi_util_error_print(WIFI_CTRL,"%s:%d Exit\n", __func__, __LINE__);
 error:
     if (jop != NULL) json_decref(jop);
 

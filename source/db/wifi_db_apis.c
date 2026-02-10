@@ -1857,6 +1857,7 @@ void wifidb_print_interworking_config ()
 **************************************************************************************/
 int wifidb_get_rfc_config(UINT rfc_id, wifi_rfc_dml_parameters_t *rfc_info)
 {
+    wifi_util_info_print(WIFI_DB, "%s:%d: Entry\n", __func__, __LINE__);
     struct schema_Wifi_Rfc_Config  *pcfg;
     json_t *where;
     int count; 
@@ -1896,6 +1897,7 @@ int wifidb_get_rfc_config(UINT rfc_id, wifi_rfc_dml_parameters_t *rfc_info)
     rfc_info->wpa3_compatibility_enable = pcfg->wpa3_compatibility_enable;
     rfc_info->csi_analytics_enabled_rfc = pcfg->csi_analytics_enabled_rfc;
     free(pcfg);
+    wifi_util_info_print(WIFI_DB, "%s:%d: Exit\n", __func__, __LINE__);
     return 0;
 }
 

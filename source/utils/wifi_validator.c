@@ -2245,6 +2245,7 @@ int validate_wifi_config(const cJSON *wifi, wifi_global_config_t *wifi_info, pEr
 
 int wifi_validate_config(const cJSON *root_json, wifi_global_config_t *wifi_config, wifi_vap_info_map_t *vap_map, wifi_radio_operationParam_t *radio_vap_map, wifi_radio_feature_param_t *radio_feat_map, char *num_of_radio, wifi_platform_property_t *wifi_prop, pErr execRetVal)
 {
+    wifi_util_error_print(WIFI_CTRL,"%s:%d Entry\n", __func__, __LINE__);
     const cJSON *wifi, *radio_vaps, *radio_vap, *param_vap, *param_radio;
     int num_radio;
     const char *err = NULL;
@@ -2337,5 +2338,6 @@ int wifi_validate_config(const cJSON *root_json, wifi_global_config_t *wifi_conf
             return RETURN_ERR;
         }
     }
+    wifi_util_error_print(WIFI_CTRL,"%s:%d Exit\n", __func__, __LINE__);
     return RETURN_OK;
 }

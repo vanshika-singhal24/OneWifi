@@ -25,7 +25,7 @@
 #include <limits.h>
 #include "scheduler.h"
 #include "timespec_macro.h"
-
+#include "wifi_util.h"
 struct timer_task {
     int id;                             /* identifier - used to delete */
     struct timespec timeout;            /* Next timeout */
@@ -77,6 +77,7 @@ struct scheduler * scheduler_init(void)
 
 int scheduler_deinit(struct scheduler **sched)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     if (sched == NULL || *sched == NULL) {
         return -1;
     }
@@ -91,6 +92,7 @@ int scheduler_deinit(struct scheduler **sched)
     pthread_mutex_destroy(&(*sched)->lock);
     free(*sched);
     *sched = NULL;
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
     return 0;
 }
 

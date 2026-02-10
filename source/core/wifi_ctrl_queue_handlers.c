@@ -3136,6 +3136,7 @@ int dfs_nop_finish_timer(void *args)
 
 void process_channel_change_event(wifi_channel_change_event_t *ch_chg, bool is_nop_start_reboot, unsigned int dfs_timer_secs)
 {
+    wifi_util_dbg_print(WIFI_CTRL, "%s:%d: Entry\n", __func__, __LINE__);
     wifi_radio_operationParam_t *radio_params = NULL;
     wifi_radio_feature_param_t *radio_feat = NULL;
     wifi_radio_operationParam_t *temp_radio_params = NULL;
@@ -3410,6 +3411,7 @@ void process_channel_change_event(wifi_channel_change_event_t *ch_chg, bool is_n
     g_wifidb->ctrl.webconfig_state |= ctrl_webconfig_state_radio_cfg_rsp_pending;
     start_wifi_sched_timer(ch_chg->radioIndex, ctrl, wifi_radio_sched);
     update_wifi_radio_config(ch_chg->radioIndex, radio_params, radio_feat);
+    wifi_util_dbg_print(WIFI_CTRL, "%s:%d: Exit\n", __func__, __LINE__);
 
 cleanup:
     if (temp_radio_params != NULL) {
