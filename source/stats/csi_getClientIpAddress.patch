@@ -1,0 +1,83 @@
+commit 9ce5cc50f261f2ddd970d62383c78ef528d3484d
+Author: vanshika <vanshika_lnu@comcast.com>
+Date:   Fri Apr 10 09:40:25 2026 +0000
+
+    Stack Use fix
+
+diff --git a/source/stats/wifi_monitor.c b/source/stats/wifi_monitor.c
+index d288f7f..f88679d 100644
+--- a/source/stats/wifi_monitor.c
++++ b/source/stats/wifi_monitor.c
+@@ -99,6 +99,7 @@
+ #define RSN_CIPHERSUITE_GCMP_256 RSN_SELECTOR(0x00, 0x0f, 0xac, 9)
+ 
+ #define RSN_SELECTOR_LEN 4
++#define IP_ADDR_NLBUF_SIZE 16384
+ 
+ struct element {
+     uint8_t id;
+@@ -2530,7 +2531,7 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+     } req;
+ 
+     int status;
+-    char buf[16384];
++    char *buf = NULL;
+     struct nlmsghdr *nlm;
+     struct ndmsg *rtmp;
+     struct rtattr * table[NDA_MAX+1];
+@@ -2549,6 +2550,14 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+         wifi_util_error_print(WIFI_MON, "Socket error\n");
+         return -1;
+     }
++
++    buf = (char *)malloc(IP_ADDR_NLBUF_SIZE);
++    if (buf == NULL) {
++        wifi_util_error_print(WIFI_MON, "%s:%d malloc failed\n",
++                          __func__, __LINE__);
++        return -1;
++    }
++
+     req.n.nlmsg_len = NLMSG_LENGTH(sizeof(struct ndmsg));
+     req.n.nlmsg_flags = NLM_F_REQUEST | NLM_F_ROOT | NLM_F_REQUEST;
+     req.n.nlmsg_type = RTM_GETNEIGH;
+@@ -2564,13 +2573,15 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+     if (status < 0) {
+         wifi_util_error_print(WIFI_MON, "Socket send error\n");
+         close(fd);
++        free(buf);
+         return -1;
+     }
+ 
+-    status = recv(fd, buf, sizeof(buf), 0);
++    status = recv(fd, buf, IP_ADDR_NLBUF_SIZE, 0);
+     if (status < 0) {
+         wifi_util_error_print(WIFI_MON, "Socket receive error\n");
+         close(fd);
++        free(buf);
+         return -1;
+     }
+ 
+@@ -2581,6 +2592,7 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+         if (req_len<0 || len>status || !NLMSG_OK(nlm, status)) {
+             wifi_util_error_print(WIFI_MON, "packet length error\n");
+             close(fd);
++            free(buf);
+             return -1;
+         }
+ 
+@@ -2597,6 +2609,7 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+                         if_indextoname(rtmp->ndm_ifindex, if_name);
+                         strncpy(interface, if_name, IFNAMSIZ);
+                         close(fd);
++                        free(buf);
+                         return 0;
+                     }
+                 }
+@@ -2606,6 +2619,7 @@ int csi_getClientIpAddress(char *mac, char *ip, char *interface, int check)
+         nlm = (struct nlmsghdr*)((char*)nlm + NLMSG_ALIGN(len));
+     }
+     close(fd);
++    free(buf);
+     return -1;
+ }
+ 
