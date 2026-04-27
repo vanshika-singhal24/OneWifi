@@ -44,6 +44,7 @@
 
 struct pack_hdr *pack_files(char *files[], uint32_t nfile)
 {
+#define __MAX_PACK_SIZE (1024 * 1024 * 1024)  /* 1GB cap, adjust as needed */
     struct pack_hdr *pkthdr;
     void *old_pkthdr;
     struct file_hdr *filhdr;
@@ -85,7 +86,23 @@ struct pack_hdr *pack_files(char *files[], uint32_t nfile)
             fclose(fp);
             return NULL;
         }
+
+        if (buf.st_size < 0 || buf.st_size > __MAX_PACK_SIZE) {
+            fprintf(stderr, "%s: invalid file size %jd\n", __FUNCTION__, (intmax_t)buf.st_size);
+            fclose(fp);
+            free(pkthdr);
+            return NULL;
+        }
+
         filhdr->size = buf.st_size;
+
+        if (pkthdr->totsize > __MAX_PACK_SIZE - buf.st_size) {
+            fprintf(stderr, "%s: package size overflow\n", __FUNCTION__);
+            fclose(fp);
+            free(pkthdr);
+            return NULL;
+        }
+
         pkthdr->totsize += filhdr->size;
 
         old_pkthdr = pkthdr;
