@@ -2640,6 +2640,7 @@ unsigned short csum(unsigned short *ptr,int nbytes)
 
 static int frame_icmpv4_ping(char *buffer, size_t buffer_len, char *dest_ip, char *source_ip)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     char *data;
     int buffer_size;
     //ip header
@@ -2681,11 +2682,13 @@ static int frame_icmpv4_ping(char *buffer, size_t buffer_len, char *dest_ip, cha
     ip->id = htonl (54321);
     ip->check = csum ((unsigned short *) (ip), sizeof(struct iphdr));
 
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
     return buffer_size;
 }
 
 static int frame_icmpv6_ping(char *buffer, size_t buffer_len, char *dest_ip, char *source_ip)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     char *data;
     int buffer_size;
     struct ip6_hdr* ip  = (struct ip6_hdr*) buffer;
@@ -2733,6 +2736,7 @@ static int frame_icmpv6_ping(char *buffer, size_t buffer_len, char *dest_ip, cha
     icmp->icmp6_cksum = 0;
     icmp->icmp6_cksum = csum ((unsigned short* )sample, sizeof(struct ip6_pseu)+sizeof(struct icmp6_hdr)+strlen(data));
 
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     return buffer_size;
 }
 

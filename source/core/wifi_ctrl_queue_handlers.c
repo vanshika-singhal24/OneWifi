@@ -816,6 +816,7 @@ void send_hotspot_status(char* vap_name, bool up)
 
 void process_xfinity_vaps(wifi_hotspot_action_t param, bool hs_evt)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     rdk_wifi_vap_info_t *rdk_vap_info;
     vap_svc_t  *pub_svc = NULL;
     wifi_ctrl_t *ctrl;
@@ -976,6 +977,7 @@ void process_xfinity_vaps(wifi_hotspot_action_t param, bool hs_evt)
         free(hotspot_5g_vap_info);
         hotspot_5g_vap_info = NULL;
     }
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
 }
 
 void convert_freq_to_channel(unsigned int freq, unsigned char *channel)
@@ -1828,7 +1830,7 @@ void process_greylist_mac_filter(void *data)
 
 void process_wifi_host_sync()
 {
-    wifi_util_dbg_print(WIFI_CTRL, "%s:%d Inside \n", __func__, __LINE__);
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     LM_wifi_hosts_t *hosts = NULL;
     wifi_mgr_t *p_wifi_mgr = get_wifimgr_obj();
     mac_addr_str_t mac_str;
@@ -1916,6 +1918,7 @@ void process_wifi_host_sync()
     pthread_mutex_destroy(&hosts->hosts_lock);
     free(hosts);
     hosts = NULL;
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
 }
 
 void lm_notify_disassoc(assoc_dev_data_t *assoc_dev_data, unsigned int vap_index)
