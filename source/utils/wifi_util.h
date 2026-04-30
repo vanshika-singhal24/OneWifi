@@ -186,8 +186,9 @@ typedef struct {
 
 typedef struct {
     int count;
+    pthread_mutex_t hosts_lock;
     LM_wifi_host_t host[LM_MAX_HOSTS_NUM];
-} __attribute__((packed, aligned(1))) LM_wifi_hosts_t;
+}LM_wifi_hosts_t;
 
 typedef struct {
     int scan_mode;
