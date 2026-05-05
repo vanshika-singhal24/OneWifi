@@ -42,6 +42,8 @@
 #include <sys/stat.h>
 #include "pack_file.h"
 
+static const off_t PACK_MAX_SIZE_BYTES = (off_t)(1024 * 1024 * 1024);  /* 1GB cap, adjust as needed */
+
 struct pack_hdr *pack_files(char *files[], uint32_t nfile)
 {
     struct pack_hdr *pkthdr;
@@ -85,7 +87,23 @@ struct pack_hdr *pack_files(char *files[], uint32_t nfile)
             fclose(fp);
             return NULL;
         }
+
+        if (buf.st_size < 0 || buf.st_size > PACK_MAX_SIZE_BYTES) {
+            fprintf(stderr, "%s: invalid file size %jd\n", __FUNCTION__, (intmax_t)buf.st_size);
+            fclose(fp);
+            free(pkthdr);
+            return NULL;
+        }
+
         filhdr->size = buf.st_size;
+
+        if (pkthdr->totsize > PACK_MAX_SIZE_BYTES - buf.st_size) {
+            fprintf(stderr, "%s: package size overflow\n", __FUNCTION__);
+            fclose(fp);
+            free(pkthdr);
+            return NULL;
+        }
+
         pkthdr->totsize += filhdr->size;
 
         old_pkthdr = pkthdr;
