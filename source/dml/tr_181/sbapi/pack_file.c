@@ -41,11 +41,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "pack_file.h"
+#include "wifi_util.h"
 
 static const off_t PACK_MAX_SIZE_BYTES = (off_t)(1024 * 1024 * 1024);  /* 1GB cap, adjust as needed */
 
 struct pack_hdr *pack_files(char *files[], uint32_t nfile)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     struct pack_hdr *pkthdr;
     void *old_pkthdr;
     struct file_hdr *filhdr;
@@ -127,6 +129,7 @@ struct pack_hdr *pack_files(char *files[], uint32_t nfile)
     memset(pkthdr->chksum, 0, sizeof(pkthdr->chksum)); // TODO:
 
     return pkthdr;
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
 }
 
 int unpack_files(const struct pack_hdr *pkthdr)

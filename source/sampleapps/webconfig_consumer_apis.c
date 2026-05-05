@@ -2053,6 +2053,7 @@ int decode_802_11_frame(webconfig_consumer_t *consumer, unsigned int vap_index, 
 
 int decode_pcap(webconfig_consumer_t *consumer, unsigned int vap_index, char *file_name)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     // mac_address_t sta;
     FILE *fp = NULL;
     unsigned char buff[MAX_FRAME_SZ];
@@ -2216,6 +2217,7 @@ int decode_pcap(webconfig_consumer_t *consumer, unsigned int vap_index, char *fi
     fclose(fp);
 
     printf("%s:%d: Frames Parsed: %d\n", __func__, __LINE__, frames_parsed);
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
     return 0;
 }
 

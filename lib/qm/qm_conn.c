@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "os_time.h"
 #include "util.h"
 #include "qm_conn.h"
+#include "wifi_util.h"
 
 #define QM_SOCK_DIR "/tmp/opensync/"
 #define QM_SOCK_FILENAME QM_SOCK_DIR"qm.sock"
@@ -238,6 +239,7 @@ write_err:
 
 bool qm_conn_read_req(int fd, qm_request_t *req, char **topic, void **data)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     int ret;
     int size;
     int total = 0;
@@ -289,6 +291,7 @@ error:
     *topic = NULL;
     *data = NULL;
     return false;
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
 }
 
 // for async call

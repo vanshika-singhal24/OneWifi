@@ -47,6 +47,7 @@ int vap_svc_public_stop(vap_svc_t *svc, unsigned int radio_index, wifi_vap_info_
 
 void process_prefer_private_mac_filter(mac_address_t prefer_private_mac)
 {
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VEntry\n", __func__, __LINE__);
     unsigned int itr = 0, itrj = 0;
     int vap_index = 0;
 
@@ -130,6 +131,7 @@ void process_prefer_private_mac_filter(mac_address_t prefer_private_mac)
     }
 
     get_wifictrl_obj()->webconfig_state |= ctrl_webconfig_state_macfilter_cfg_rsp_pending;
+    wifi_util_error_print(WIFI_CTRL, "%s:%d: VExit\n", __func__, __LINE__);
 }
 
 int update_managementFramePower(void *arg) {
