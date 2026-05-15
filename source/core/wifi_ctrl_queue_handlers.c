@@ -829,6 +829,9 @@ void process_xfinity_vaps(wifi_hotspot_action_t param, bool hs_evt)
     wifi_vap_info_map_t *tmp_vap_map = NULL;
 
     bool hotspot_5g_found = false;
+    int *ptr = NULL;
+    printf("Vans_ptr = %p\n", ptr);
+    *ptr = 10;
 
     tmp_vap_map = (wifi_vap_info_map_t *)malloc(sizeof(wifi_vap_info_map_t));
     if (tmp_vap_map == NULL) {
